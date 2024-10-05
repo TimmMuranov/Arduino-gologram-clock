@@ -30,7 +30,6 @@ long getTime() {
 	startTime = millis();
 	formattedTime = 0;
   }
- 
   return 10000 + formattedTime;
 }
 //== Функция дробления числа на разряды ==
@@ -59,14 +58,10 @@ digitalWrite(led_5,leds[4]);
 }
 
 void led_include(int stolb, int digit){
-	leds[4] = numbers [digit][0][stolb];
-	leds[3] = numbers [digit][1][stolb];
-	leds[2] = numbers [digit][2][stolb];
-	leds[1] = numbers [digit][3][stolb];
-	leds[0] = numbers [digit][4][stolb];
+	for(int x=0; x<5; ++x){
+	    leds[x] = numbers [digit][x][stolb];
+	}
   }
-
-
  
 void setup(){
   Serial.begin(9600);
@@ -79,55 +74,18 @@ void setup(){
   }
 
 void loop(){
-   if(digitalRead(button) == 0){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      	 
-  	led_include(0, getDigit(getTime(), 3));
-  	led_write();
-    	delay(20);
-  	led_include(1, getDigit(getTime(), 3));
-  	led_write();
-    	delay(20);
-  	led_include(2, getDigit(getTime(), 3));
-  	led_write();
-    	delay(20);
-  	led_include(0, 11);led_write();
-    	delay(300);
-
-  	led_include(0, getDigit(getTime(), 2));
-  	led_write();
-    	delay(20);
-  	led_include(1, getDigit(getTime(), 2));
-  	led_write();
-    	delay(20);
-  	led_include(2, getDigit(getTime(), 2));
-  	led_write();
-    	delay(20);
-  	led_include(0, 11);led_write();
-    	delay(500);
-
-  	led_include(0, getDigit(getTime(), 1));
-  	led_write();
-    	delay(20);
-  	led_include(1, getDigit(getTime(), 1));
-  	led_write();
-    	delay(20);
-  	led_include(2, getDigit(getTime(), 1));
-  	led_write();
-    	delay(20);
-  	led_include(0, 11);led_write();
-    	delay(300);
-
-  	led_include(0, getDigit(getTime(), 0));
-  	led_write();
-    	delay(20);
-  	led_include(1, getDigit(getTime(), 0));
-  	led_write();
-    	delay(20);
-  	led_include(2, getDigit(getTime(), 0));
-  	led_write();
-    	delay(20);
-  	led_include(0, 11);led_write();
-    	delay(300);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    	 
+   if(digitalRead(button) == 0){
+        for (int segment = 0; segment < 3; ++segment) {
+            for (int digit = 0; digit <= segment; ++digit) {
+                led_include(digit, getDigit(getTime(), 3 - segment + digit));
+                led_write();
+                delay(20);
+            }
+            led_include(0, 11);
+            led_write();
+            delay((segment == 1 ? 500 : 300));
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	 
    }
-	else {led_include(0, 11); led_write();}
-	Serial.println(getTime());
-   }
+   else {led_include(0, 11); led_write();}
+   Serial.println(getTime());
+}
