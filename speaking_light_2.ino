@@ -59,7 +59,7 @@ digitalWrite(led_5,leds[4]);
 
 void led_include(int stolb, int digit){
 	for(int x=0; x<5; ++x){
-	    leds[x] = numbers [digit][x][stolb];
+	    leds[4-x] = numbers [digit][x][stolb];
 	}
   }
  
